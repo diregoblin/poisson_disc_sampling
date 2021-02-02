@@ -1,0 +1,5 @@
+**/*.pyc
+.ipynb_checkpoints/.gitignore-checkpoint
+.ipynb_checkpoints/README-checkpoint.md
+.ipynb_checkpoints/poisson_disc_sampling-checkpoint.ipynb
+.ipynb_checkpoints/bridson-checkpoint.py
