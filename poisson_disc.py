@@ -1,4 +1,4 @@
-# Poisson disc sampling in arbitrary dimensions
+# Poisson disc sampling in arbitrary dimensions via Bridson algorithm
 # Implementation by Pavel Zun, pavel.zun@gmail.com
 # BSD licence - https://github.com/diregoblin/poisson_disc_sampling
 
@@ -11,7 +11,7 @@ from scipy.special import gammainc
 
 # Uniform sampling in a hyperspere
 # Based on Matlab implementation by Roger Stafford
-# Can be optimized for Bridson algorithm by excluding all points within the r/2 sphere 
+# Can be optimized for Bridson algorithm by excluding all points within the r/2 sphere
 def hypersphere_sample(center,radius,k=1):
     ndim = center.size
     x = np.random.normal(size=(k, ndim))
@@ -29,7 +29,7 @@ def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30):
     #             Robert Bridson, SIGGRAPH, 2007
 
     ndim=dims.size
-    
+
     def in_limits(p):
         return np.all(np.zeros(ndim) <= p) and np.all(p < dims)
 

@@ -5,4 +5,6 @@ Generates so-called "blue noise" that prevents clustering by ensuring each two p
 
 https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph07-poissondisk.pdf
 
-Implementation is located in ``bridson.py``, while ``poisson_disc_sampling.ipynb`` contains some examples. 
+Implementation is located in ``poisson_disc.py``, while ``poisson_disc_sampling.ipynb`` contains some examples. 
+
+Available through PyPI as ``poisson_disc``, https://pypi.org/project/poisson-disc/

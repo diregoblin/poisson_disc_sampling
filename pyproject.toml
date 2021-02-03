@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "poisson_disc"
+version = "0.1.1"
+description = "Poisson disc sampling in arbitrary dimensions using Bridson's algorithm, implemented in python using numpy and scipy. Generates so-called \"blue noise\" that prevents clustering by ensuring each two points are at least \"radius\" apart."
+authors = ["Pavel Zun <pavel.zun@gmail.com>"]
+license = "BSD-2-Clause"
+readme = "README.md"
+homepage = "https://github.com/diregoblin/poisson_disc_sampling"
+repository = "https://github.com/diregoblin/poisson_disc_sampling"
+
+include = [
+    "LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+numpy = "^1.20.0"
+scipy = "^1.6.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
