@@ -12,7 +12,7 @@ from scipy.special import gammainc
 # Uniform sampling in a hyperspere
 # Based on Matlab implementation by Roger Stafford
 # Can be optimized for Bridson algorithm by excluding all points within the r/2 sphere
-def hypersphere_sample(center,radius,k=1):
+def hypersphere_volume_sample(center,radius,k=1):
     ndim = center.size
     x = np.random.normal(size=(k, ndim))
     ssq = np.sum(x**2,axis=1)
@@ -21,15 +21,36 @@ def hypersphere_sample(center,radius,k=1):
     p = center + np.multiply(x,frtiled)
     return p
 
+
+# Uniform sampling on the sphere's surface
+def hypersphere_surface_sample(center,radius,k=1):
+    ndim = center.size
+    vec = np.random.standard_normal(size=(k, ndim))
+    vec /= np.linalg.norm(vec, axis=1)[:,None]
+    p = center + np.multiply(vec, radius)
+    return p
+
+
 def squared_distance(p0, p1):
     return np.sum((p0-p1)*(p0-p1))
 
-def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30):
+def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30, hypersphere_sample=hypersphere_volume_sample):
     # References: Fast Poisson Disk Sampling in Arbitrary Dimensions
     #             Robert Bridson, SIGGRAPH, 2007
 
     ndim=dims.size
 
+    # size of the sphere from which the samples are drawn relative to the size of a disc (radius)
+    sample_factor = 2
+    if hypersphere_sample == hypersphere_volume_sample:
+        sample_factor = 2
+        
+    # for the surface sampler, all new points are almost exactly 1 radius away from at least one existing sample
+    # eps to avoid rejection
+    if hypersphere_sample == hypersphere_surface_sample:
+        eps = 0.001
+        sample_factor = 1 + eps
+    
     def in_limits(p):
         return np.all(np.zeros(ndim) <= p) and np.all(p < dims)
 
@@ -66,7 +87,7 @@ def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30):
         i = np.random.randint(len(points))
         p = points[i]
         del points[i]
-        Q = hypersphere_sample(np.array(p), radius*2, k)
+        Q = hypersphere_sample(np.array(p), radius * sample_factor, k)
         for q in Q:
             if in_limits(q) and not in_neighborhood(q):
                 add_point(q)
