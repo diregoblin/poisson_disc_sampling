@@ -66,9 +66,10 @@ def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30, hypersphere_sa
         a = []
         for i in range(ndim):
             a.append(slice(indmin[i], indmax[i]))
-        if np.any(np.sum(np.square(p - P[tuple(a)]), axis=ndim) < squared_radius):
-            return True
-    
+        with np.errstate(invalid='ignore'):
+            if np.any(np.sum(np.square(p - P[tuple(a)]), axis=ndim) < squared_radius):
+                return True
+
     def add_point(p):
         points.append(p)
         indices = (p/cellsize).astype(int)
