@@ -34,7 +34,7 @@ def hypersphere_surface_sample(center,radius,k=1):
 def squared_distance(p0, p1):
     return np.sum(np.square(p0-p1))
 
-def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30, hypersphere_sample=hypersphere_volume_sample):
+def Bridson_sampling(num_samples=20, dims=np.array([1.0,1.0]), radius=0.05, k=30, hypersphere_sample=hypersphere_volume_sample):
     # References: Fast Poisson Disk Sampling in Arbitrary Dimensions
     #             Robert Bridson, SIGGRAPH, 2007
 
@@ -89,6 +89,8 @@ def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30, hypersphere_sa
     points = []
     add_point(np.random.uniform(np.zeros(ndim), dims))
     while len(points):
+        if len(P[~np.isnan(P).any(axis=ndim)]) > num_samples:
+            break
         i = np.random.randint(len(points))
         p = points[i]
         del points[i]
@@ -96,4 +98,6 @@ def Bridson_sampling(dims=np.array([1.0,1.0]), radius=0.05, k=30, hypersphere_sa
         for q in Q:
             if in_limits(q) and not in_neighborhood(q):
                 add_point(q)
+                if len(P[~np.isnan(P).any(axis=ndim)]) > num_samples:
+                    return P[~np.isnan(P).any(axis=ndim)]
     return P[~np.isnan(P).any(axis=ndim)]
