@@ -8,3 +8,5 @@ https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph07-poissondisk.pdf
 Implementation is located in ``poisson_disc.py``, while ``poisson_disc_sampling.ipynb`` contains some examples. 
 
 Available through PyPI as ``poisson_disc``, https://pypi.org/project/poisson-disc/
+
+Also, this code is now included in SciPy as https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.qmc.PoissonDisk.html
